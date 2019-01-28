@@ -298,22 +298,52 @@ img {
 <tr>
 	<th>服务名称</th>
 	<th>服务描述</th>
+	<th>请求方式</th>
 	<th>备注</th>
-	<th></th>
 </tr>
 </thead>
 <tbody>
 <tr>
 	<td>getRegiesterCode</td>
 	<td>新用户注册获取验证码</td>
+	<td>GET</td>
 	<td></td>
-	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td>userRegiester</td>
+	<td>用户注册</td>
+	<td>GET</td>
+	<td></td>
 </tr>
 <tr>
 	<td>signinByPasswd</td>
 	<td>用户手机号密码登录</td>
+	<td>GET</td>
 	<td></td>
-	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td>addFamily</td>
+	<td>用户添加家庭</td>
+	<td>POST</td>
+	<td></td>
+</tr>
+<tr>
+	<td>removeFamily</td>
+	<td>用户删除家庭</td>
+	<td>GET</td>
+	<td></td>
+</tr>
+<tr>
+	<td>quaryMyFamily</td>
+	<td>用户查询家庭列表</td>
+	<td>GET</td>
+	<td></td>
+</tr>
+<tr>
+	<td>modifyFamilyMsg</td>
+	<td>用户修改家庭信息</td>
+	<td>POST</td>
+	<td></td>
 </tr>
 </tbody>
 </table>
@@ -356,6 +386,7 @@ img {
 </table>
 <h4><code>getRegiesterCode</code>：新用户注册获取验证码</h4>
 <blockquote>
+<p><strong>请求方式GET</strong></p>
 <p>请求参数</p>
 </blockquote>
 <table>
@@ -432,12 +463,6 @@ img {
 	<td>&nbsp;</td>
 </tr>
 <tr>
-	<td>veritifyCode</td>
-	<td>短信验证码</td>
-	<td>int</td>
-	<td>短息验证码最长可用10分钟，过时无效，需向服务端重新请求最新的短信验证码（注册过的用户注册不许发送验证码）</td>
-</tr>
-<tr>
 	<td>status</td>
 	<td>短信验证功码的状态标识</td>
 	<td>int</td>
@@ -451,8 +476,245 @@ img {
 </tr>
 </tbody>
 </table>
+<h4><code>userRegiester</code> 用户注册</h4>
+<blockquote>
+<p><strong>请求方式GET</strong></p>
+<p>请求参数</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+	<th>参数名称</th>
+	<th>描述</th>
+	<th>参数类型</th>
+	<th>是否必传</th>
+	<th>长度限制</th>
+	<th>省略时初始值</th>
+	<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td>phoneNumber</td>
+	<td>需要注册的手机号（仅支持大陆手机）</td>
+	<td>String</td>
+	<td>是</td>
+	<td>11</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>veritifyCode</td>
+	<td>短信验证码</td>
+	<td>int</td>
+	<td>是</td>
+	<td>6</td>
+	<td>null</td>
+	<td>短息验证码最长可用10分钟，过时无效，需向服务端重新请求最新的短信验证码（注册过的用户注册不许发送验证码）</td>
+</tr>
+<tr>
+	<td>passwd</td>
+	<td>用户密码</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td>用户密码6-20</td>
+</tr>
+<tr>
+	<td>machineCode</td>
+	<td>手机机器码</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td>用户手机机器码</td>
+</tr>
+<tr>
+	<td>deviceType</td>
+	<td>用户设备客户端类型</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>Android</td>
+	<td>用户设备平台类型</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>响应参数</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+	<th>参数名称</th>
+	<th>描述</th>
+	<th>参数类型</th>
+	<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td>code</td>
+	<td>请求响应码</td>
+	<td>int</td>
+	<td>200成功；其他值为失败详细查询code表</td>
+</tr>
+<tr>
+	<td>message</td>
+	<td>请求信息</td>
+	<td>String</td>
+	<td>请求成功</td>
+</tr>
+<tr>
+	<td>result</td>
+	<td>包装响应参数的实体类</td>
+	<td></td>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td>status</td>
+	<td>短信验证功码的状态标识</td>
+	<td>int</td>
+	<td>0:登录成功；1:登录异常；</td>
+</tr>
+<tr>
+	<td>describe</td>
+	<td>描述信息</td>
+	<td>String</td>
+	<td>描述信息 0:登录成功	 ；1:手机号异常异常，未注册等；</td>
+</tr>
+<tr>
+	<td>userId</td>
+	<td>用户id</td>
+	<td>String</td>
+	<td></td>
+</tr>
+<tr>
+	<td>token</td>
+	<td>token令牌</td>
+	<td>String</td>
+	<td></td>
+</tr>
+<tr>
+	<td>nickName</td>
+	<td>昵称</td>
+	<td>String</td>
+	<td>用户昵称</td>
+</tr>
+<tr>
+	<td>group</td>
+	<td>用户分组</td>
+	<td>String</td>
+	<td></td>
+</tr>
+<tr>
+	<td>headimage</td>
+	<td>用户头像</td>
+	<td>String</td>
+	<td>新用户注册给定默认头像</td>
+</tr>
+<tr>
+	<td>familylist</td>
+	<td>绑定家庭的地址的数组</td>
+	<td>ArrayList</td>
+	<td></td>
+</tr>
+<tr>
+	<td>family_id</td>
+	<td>String</td>
+	<td>家庭id</td>
+	<td></td>
+</tr>
+<tr>
+	<td>family_nickname</td>
+	<td>String</td>
+	<td>家庭别名</td>
+	<td></td>
+</tr>
+<tr>
+	<td>family_address</td>
+	<td>String</td>
+	<td>家庭地址</td>
+	<td></td>
+</tr>
+<tr>
+	<td>family_longitude</td>
+	<td>String</td>
+	<td>家庭地址的经度</td>
+	<td></td>
+</tr>
+<tr>
+	<td>family_latitude</td>
+	<td>String</td>
+	<td>家庭地址的纬度</td>
+	<td></td>
+</tr>
+<tr>
+	<td>device_id</td>
+	<td>String</td>
+	<td>智能家庭服务器id</td>
+	<td></td>
+</tr>
+<tr>
+	<td>device_ip_local</td>
+	<td>String</td>
+	<td>局域网IP</td>
+	<td></td>
+</tr>
+<tr>
+	<td>device_ip_public</td>
+	<td>String</td>
+	<td>公网IP</td>
+	<td></td>
+</tr>
+<tr>
+	<td>device_ip_backup</td>
+	<td>String</td>
+	<td>备份公网地址</td>
+	<td></td>
+</tr>
+<tr>
+	<td>device_belong</td>
+	<td>String</td>
+	<td>设备所属的家庭编号</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+<pre><code>{
+    &quot;code&quot;: &quot;200&quot;,
+    &quot;message&quot;: &quot;请求成功&quot;,
+    &quot;result&quot;: {
+        &quot;status&quot;: 0,
+        &quot;describe&quot;: &quot;&quot;,
+        &quot;userId&quot;: &quot;100001&quot;,
+        &quot;token&quot;: &quot;a452145fdfsccd&quot;,
+        &quot;nickName&quot;: &quot;测试&quot;,
+        &quot;group&quot;: &quot;一个分组&quot;,
+        &quot;headimage&quot;: &quot;/smarthome/index/getheadImage?userId=100001&quot;,
+        &quot;familylist&quot;: [
+            {
+                &quot;family_id&quot;: 1234,
+                &quot;family_nickname&quot;: &quot;测试家庭&quot;,
+                &quot;family_address&quot;: &quot;天安门&quot;,
+                &quot;family_longitude&quot;: &quot;39.61269&quot;,
+                &quot;family_latitude&quot;: &quot;116.613&quot;,
+                &quot;device_id&quot;: 100001,
+                &quot;device_ip_local&quot;: &quot;192.168.2.85:8123&quot;,
+                &quot;device_ip_public&quot;: &quot;123.206.43.15:8081&quot;,
+                &quot;device_ip_backup&quot;: &quot;23.106.135.182:8081&quot;,
+                &quot;device_belong&quot;: 1234
+            }
+        ]
+    }
+}
+</code></pre>
+
+<p>W</p>
 <h4><code>signinByPasswd</code>: 用户手机号密码登录</h4>
 <blockquote>
+<p><strong>请求方式GET</strong></p>
 <p>请求参数</p>
 </blockquote>
 <table>
@@ -586,16 +848,712 @@ img {
 	<td></td>
 </tr>
 <tr>
-	<td>outside</td>
+	<td>family_id</td>
+	<td>String</td>
+	<td>家庭id</td>
+	<td></td>
+</tr>
+<tr>
+	<td>family_nickname</td>
+	<td>String</td>
+	<td>家庭别名</td>
+	<td></td>
+</tr>
+<tr>
+	<td>family_address</td>
+	<td>String</td>
+	<td>家庭地址</td>
+	<td></td>
+</tr>
+<tr>
+	<td>family_longitude</td>
+	<td>String</td>
+	<td>家庭地址的经度</td>
+	<td></td>
+</tr>
+<tr>
+	<td>family_latitude</td>
+	<td>String</td>
+	<td>家庭地址的纬度</td>
+	<td></td>
+</tr>
+<tr>
+	<td>device_id</td>
+	<td>String</td>
+	<td>智能家庭服务器id</td>
+	<td></td>
+</tr>
+<tr>
+	<td>device_ip_local</td>
+	<td>String</td>
+	<td>局域网IP</td>
+	<td></td>
+</tr>
+<tr>
+	<td>device_ip_public</td>
 	<td>String</td>
 	<td>公网IP</td>
 	<td></td>
 </tr>
 <tr>
-	<td>inner</td>
+	<td>device_ip_backup</td>
+	<td>String</td>
+	<td>备份公网地址</td>
+	<td></td>
+</tr>
+<tr>
+	<td>device_belong</td>
+	<td>String</td>
+	<td>设备所属的家庭编号</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+<pre><code>{
+    &quot;code&quot;: &quot;200&quot;,
+    &quot;message&quot;: &quot;请求成功&quot;,
+    &quot;result&quot;: {
+        &quot;status&quot;: 0,
+        &quot;describe&quot;: &quot;&quot;,
+        &quot;userId&quot;: &quot;100001&quot;,
+        &quot;token&quot;: &quot;a452145fdfsccd&quot;,
+        &quot;nickName&quot;: &quot;测试&quot;,
+        &quot;group&quot;: &quot;一个分组&quot;,
+        &quot;headimage&quot;: &quot;/smarthome/index/getheadImage?userId=100001&quot;,
+        &quot;familylist&quot;: [
+            {
+                &quot;family_id&quot;: 1234,
+                &quot;family_nickname&quot;: &quot;测试家庭&quot;,
+                &quot;family_address&quot;: &quot;天安门&quot;,
+                &quot;family_longitude&quot;: &quot;39.61269&quot;,
+                &quot;family_latitude&quot;: &quot;116.613&quot;,
+                &quot;device_id&quot;: 100001,
+                &quot;device_ip_local&quot;: &quot;192.168.2.85:8123&quot;,
+                &quot;device_ip_public&quot;: &quot;123.206.43.15:8081&quot;,
+                &quot;device_ip_backup&quot;: &quot;23.106.135.182:8081&quot;,
+                &quot;device_belong&quot;: 1234
+            }
+        ]
+    }
+}
+</code></pre>
+
+<h4><code>addFamily</code> 用户添加家庭</h4>
+<blockquote>
+<p><strong>请求方式POST</strong></p>
+<p>请求参数</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+	<th>参数名称</th>
+	<th>描述</th>
+	<th>参数类型</th>
+	<th>是否必传</th>
+	<th>长度限制</th>
+	<th>省略时初始值</th>
+	<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td>userId</td>
+	<td>用户Id</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>token</td>
+	<td>当前登录用户的token</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>family_nickname</td>
+	<td>智能家庭的名称</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>family_address</td>
+	<td>家庭地址</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>family_longitude</td>
+	<td>家庭地址的经度</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>family_latitude</td>
+	<td>家庭地址的纬度</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>device_ip_local</td>
+	<td>局域网IP</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>device_ip_public</td>
+	<td>公网IP</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>device_ip_backup</td>
+	<td>备份公网地址</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>machineCode</td>
+	<td>手机机器码</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td>用户手机机器码</td>
+</tr>
+<tr>
+	<td>deviceType</td>
+	<td>用户设备客户端类型</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>Android</td>
+	<td>用户设备平台类型</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>响应参数</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+	<th>参数名称</th>
+	<th>描述</th>
+	<th>参数类型</th>
+	<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td>code</td>
+	<td>请求响应码</td>
+	<td>int</td>
+	<td>200成功；其他值为失败详细查询code表</td>
+</tr>
+<tr>
+	<td>message</td>
+	<td>请求信息</td>
+	<td>String</td>
+	<td>请求成功</td>
+</tr>
+<tr>
+	<td>result</td>
+	<td>包装响应参数的实体类</td>
+	<td></td>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td>status</td>
+	<td>成功的标识</td>
+	<td>int</td>
+	<td>0:成功；1:失败；</td>
+</tr>
+<tr>
+	<td>describe</td>
+	<td>描述信息</td>
+	<td>String</td>
+	<td>描述信息 0:操作成功	 ；1:操作失败；</td>
+</tr>
+</tbody>
+</table>
+<h4><code>removeFamily</code> 用户删家庭</h4>
+<blockquote>
+<p><strong>请求方式GET</strong></p>
+</blockquote>
+<ul>
+<li>只有创建的用户可以remove对应家庭，家庭删除后，所有拥有这个家庭的人全部移除这个家庭</li>
+</ul>
+<blockquote>
+<p>请求参数</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+	<th>参数名称</th>
+	<th>描述</th>
+	<th>参数类型</th>
+	<th>是否必传</th>
+	<th>长度限制</th>
+	<th>省略时初始值</th>
+	<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td>userId</td>
+	<td>用户Id</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>token</td>
+	<td>当前登录用户的token</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>family_id</td>
+	<td>智能家庭的id</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>machineCode</td>
+	<td>手机机器码</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td>用户手机机器码</td>
+</tr>
+<tr>
+	<td>deviceType</td>
+	<td>用户设备客户端类型</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>Android</td>
+	<td>用户设备平台类型</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>响应参数</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+	<th>参数名称</th>
+	<th>描述</th>
+	<th>参数类型</th>
+	<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td>code</td>
+	<td>请求响应码</td>
+	<td>int</td>
+	<td>200成功；其他值为失败详细查询code表</td>
+</tr>
+<tr>
+	<td>message</td>
+	<td>请求信息</td>
+	<td>String</td>
+	<td>请求成功</td>
+</tr>
+<tr>
+	<td>result</td>
+	<td>包装响应参数的实体类</td>
+	<td></td>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td>status</td>
+	<td>成功的标识</td>
+	<td>int</td>
+	<td>0:成功；1:失败；</td>
+</tr>
+<tr>
+	<td>describe</td>
+	<td>描述信息</td>
+	<td>String</td>
+	<td>描述信息 0:操作成功	 ；1:操作失败；</td>
+</tr>
+</tbody>
+</table>
+<h4><code>quaryMyFamily</code> 查询当前用户所有家庭列表</h4>
+<blockquote>
+<p><strong>请求方式GET</strong></p>
+<p>请求参数</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+	<th>参数名称</th>
+	<th>描述</th>
+	<th>参数类型</th>
+	<th>是否必传</th>
+	<th>长度限制</th>
+	<th>省略时初始值</th>
+	<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td>userId</td>
+	<td>用户Id</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>token</td>
+	<td>当前登录用户的token</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>machineCode</td>
+	<td>手机机器码</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td>用户手机机器码</td>
+</tr>
+<tr>
+	<td>deviceType</td>
+	<td>用户设备客户端类型</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>Android</td>
+	<td>用户设备平台类型</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>响应参数</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+	<th>参数名称</th>
+	<th>描述</th>
+	<th>参数类型</th>
+	<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td>code</td>
+	<td>请求响应码</td>
+	<td>int</td>
+	<td>200成功；其他值为失败详细查询code表</td>
+</tr>
+<tr>
+	<td>message</td>
+	<td>请求信息</td>
+	<td>String</td>
+	<td>请求成功</td>
+</tr>
+<tr>
+	<td>result</td>
+	<td>包装响应参数的实体类</td>
+	<td></td>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td>status</td>
+	<td>成功的标识</td>
+	<td>int</td>
+	<td>0:成功；1:失败；</td>
+</tr>
+<tr>
+	<td>describe</td>
+	<td>描述信息</td>
+	<td>String</td>
+	<td>描述信息 0:操作成功	 ；1:操作失败；</td>
+</tr>
+<tr>
+	<td>familylist</td>
+	<td>绑定家庭的地址的数组</td>
+	<td>ArrayList</td>
+	<td></td>
+</tr>
+<tr>
+	<td>family_id</td>
+	<td>String</td>
+	<td>家庭id</td>
+	<td></td>
+</tr>
+<tr>
+	<td>family_nickname</td>
+	<td>String</td>
+	<td>家庭别名</td>
+	<td></td>
+</tr>
+<tr>
+	<td>family_address</td>
+	<td>String</td>
+	<td>家庭地址</td>
+	<td></td>
+</tr>
+<tr>
+	<td>family_longitude</td>
+	<td>String</td>
+	<td>家庭地址的经度</td>
+	<td></td>
+</tr>
+<tr>
+	<td>family_latitude</td>
+	<td>String</td>
+	<td>家庭地址的纬度</td>
+	<td></td>
+</tr>
+<tr>
+	<td>device_id</td>
+	<td>String</td>
+	<td>智能家庭服务器id</td>
+	<td></td>
+</tr>
+<tr>
+	<td>device_ip_local</td>
 	<td>String</td>
 	<td>局域网IP</td>
 	<td></td>
+</tr>
+<tr>
+	<td>device_ip_public</td>
+	<td>String</td>
+	<td>公网IP</td>
+	<td></td>
+</tr>
+<tr>
+	<td>device_ip_backup</td>
+	<td>String</td>
+	<td>备份公网地址</td>
+	<td></td>
+</tr>
+<tr>
+	<td>device_belong</td>
+	<td>String</td>
+	<td>设备所属的家庭编号</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+<h4><code>modifyFamilyMsg</code> 用户修改家庭信息</h4>
+<blockquote>
+<p><strong>请求方式POST</strong></p>
+<p>请求参数</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+	<th>参数名称</th>
+	<th>描述</th>
+	<th>参数类型</th>
+	<th>是否必传</th>
+	<th>长度限制</th>
+	<th>省略时初始值</th>
+	<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td>userId</td>
+	<td>用户Id</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>token</td>
+	<td>当前登录用户的token</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>family_id</td>
+	<td>智能家庭的id</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>family_nickname</td>
+	<td>智能家庭的名称</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>family_address</td>
+	<td>家庭地址</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>family_longitude</td>
+	<td>家庭地址的经度</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>family_latitude</td>
+	<td>家庭地址的纬度</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>device_ip_local</td>
+	<td>局域网IP</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>device_ip_public</td>
+	<td>公网IP</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>device_ip_backup</td>
+	<td>备份公网地址</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>machineCode</td>
+	<td>手机机器码</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>null</td>
+	<td>用户手机机器码</td>
+</tr>
+<tr>
+	<td>deviceType</td>
+	<td>用户设备客户端类型</td>
+	<td>String</td>
+	<td>是</td>
+	<td>20</td>
+	<td>Android</td>
+	<td>用户设备平台类型</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>响应参数</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+	<th>参数名称</th>
+	<th>描述</th>
+	<th>参数类型</th>
+	<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td>code</td>
+	<td>请求响应码</td>
+	<td>int</td>
+	<td>200成功；其他值为失败详细查询code表</td>
+</tr>
+<tr>
+	<td>message</td>
+	<td>请求信息</td>
+	<td>String</td>
+	<td>请求成功</td>
+</tr>
+<tr>
+	<td>result</td>
+	<td>包装响应参数的实体类</td>
+	<td></td>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td>status</td>
+	<td>成功的标识</td>
+	<td>int</td>
+	<td>0:成功；1:失败；</td>
+</tr>
+<tr>
+	<td>describe</td>
+	<td>描述信息</td>
+	<td>String</td>
+	<td>描述信息 0:操作成功	 ；1:操作失败；</td>
 </tr>
 </tbody>
 </table>
